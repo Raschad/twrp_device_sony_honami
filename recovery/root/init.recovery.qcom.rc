@@ -35,6 +35,8 @@ on init
 
     setprop ro.board.platform msm8974
 
+    start patchlevel
+
 on fs
     wait /dev/block/platform/msm_sdcc.1
     symlink /dev/block/platform/msm_sdcc.1 /dev/block/bootdevice
@@ -58,6 +60,13 @@ service keymaster-3-0 /sbin/android.hardware.keymaster@3.0-service
     user root
     group root
     disabled
+    seclabel u:r:recovery:s0
+
+service patchlevel /sbin/patchlevel.sh
+    user root
+    group root
+    disabled
+    oneshot
     seclabel u:r:recovery:s0
 
 on property:ro.crypto.state=encrypted
